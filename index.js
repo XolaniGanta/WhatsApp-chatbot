@@ -67,6 +67,30 @@ router.post('/webhook', async (req, res) => {
 
                 )
             }
+            if(typeOfMsg === 'simple_button_message'){
+                let buttonID = incomingMessage.button_reply.id;
+
+                if(buttonID === 'id_Number'){
+                    await Whatsapp.sendSimpleButtons({
+                        message:`Hey ${recipientName}, Choose what operation do you want to perform`,
+                        recipientPhone: recipientPhone,
+                        listOfButtons: [{
+                            title: 'Pay your account',
+                            id: 'pay_account'
+                        },
+                        {
+                            title: 'Get statements',
+                            id: 'get_statements'
+                        },
+                        {
+                            title: 'Check balance',
+                            id: 'check_balance'
+                        }
+
+                        ]
+                    })
+                }
+            }
         }
 
         return res.sendStatus(200);
