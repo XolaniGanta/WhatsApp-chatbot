@@ -12,29 +12,28 @@ const Whatsapp = new WhatsappCloudAPI({
 
 
 router.get('/webhook', (req, res) => {
+    try {
         console.log('GET: Someone is pinging me!');
 
         let mode = req.query['hub.mode'];
         let token = req.query['hub.verify_token'];
         let challenge = req.query['hub.challenge'];
 
-        if (mode && token) {
-  
-            // Checks the mode and token sent is correct
-            if (mode === 'subscribe' && token === Meta_WA_VerifyToken) {
-              
-              // Responds with the challenge token from the request
-              console.log('WEBHOOK_VERIFIED');
-              res.status(200).send(challenge);
-            
-            } else {
-              // Responds with '403 Forbidden' if verify tokens do not match.
-              res.sendStatus(403);      
-            }
+        if (
+            mode &&
+            token &&
+            mode === 'subscribe' &&
+            process.env.Meta_WA_VerifyToken === token
+        ) {
+            return res.status(200).send(challenge);
+        } else {
+            return res.sendStatus(403);
         }
-        });
-
-    
+    } catch (error) {
+        console.error({error})
+        return res.sendStatus(500);
+    }
+});
 //meta_wa_callbackurl
 router.post('/webhook', async (req, res) => {
    
