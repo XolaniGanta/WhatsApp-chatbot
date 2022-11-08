@@ -66,12 +66,9 @@ router.post('/webhook', async (req, res) => {
                 }
 
                 )
-            }
-    
-            if(typeOfMsg === "text_message"){
+            }else{
                 //detect whether a text consist of numbers only 
                 let filterID = incomingMessage.match(/^\d+$/);
-
                 if(filterID != null){
                     await Whatsapp.sendText({
                         message:`${recipientName},Contains only numbers`,
@@ -79,6 +76,8 @@ router.post('/webhook', async (req, res) => {
                     })
                 }
             }
+
+            
             if(typeOfMsg === 'simple_button_message'){
                 let buttonID = incomingMessage.button_reply.id;
 
