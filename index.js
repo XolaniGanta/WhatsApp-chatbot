@@ -55,7 +55,7 @@ router.post('/webhook', async (req, res) => {
             let message_id = incomingMessage.message_id; // extract the message id
 
         //Logic
-          /*
+       
             if(typeOfMsg === 'text_message'){
                 await Whatsapp.sendSimpleButtons({
                     message:`Hi ${recipientName}, Thank you for contacting BestForU. In order to continue you are required to enter your ID.`,
@@ -69,10 +69,10 @@ router.post('/webhook', async (req, res) => {
 
                 )
             }
-            */
+        /*
             if(typeOfMsg === 'text_message'){
                   //detect whether a text consist of numbers only 
-                  let df = incomingMessage.text_reply.body;
+                  let df = incomingMessage.text.body;
                   let filterID = df.match(/^\d+$/);
 
                   if(filterID != null){
@@ -82,6 +82,7 @@ router.post('/webhook', async (req, res) => {
                       })
                   }
               }
+              */
       
 
 
