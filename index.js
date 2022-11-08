@@ -1,5 +1,6 @@
 'use strict';
 const router = require('express').Router();
+const { title } = require('process');
 const WhatsappCloudAPI = require('whatsappcloudapi_wrapper');
 
 const Whatsapp = new WhatsappCloudAPI({
@@ -54,9 +55,14 @@ router.post('/webhook', async (req, res) => {
         //Logic
         
             if(typeOfMsg === 'text_message'){
-                await Whatsapp.sendText({
-                    message:`Hi ${recipientName}, Thank you for contacting BestForU. In order to continue please enter your ID number.`,
-                    recipientPhone: recipientPhone
+                await Whatsapp.sendSimpleButtons({
+                    message:`Hi ${recipientName}, Thank you for contacting BestForU. In order to continue you are required to enter your ID.`,
+                    recipientPhone: recipientPhone,
+                    listOfButtons: [{
+                        title: 'Enter ID number',
+                        id:'id_Number'
+                    }
+                    ]
                 }
 
                 )
