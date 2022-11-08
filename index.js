@@ -55,21 +55,21 @@ router.post('/webhook', async (req, res) => {
             let message_id = incomingMessage.message_id; // extract the message id
 
         //Logic
-          /*
+        
             if(typeOfMsg === 'text_message'){
-                await Whatsapp.sendSimpleButtons({
+                await Whatsapp.sendText({
                     message:`Hi ${recipientName}, Thank you for contacting BestForU. In order to continue you are required to enter your ID.`,
-                    recipientPhone: recipientPhone,
-                    listOfButtons: [{
-                        title: 'Enter ID number',
-                        id:'id_Number'
-                    }
-                    ]
+                    recipientPhone: recipientPhone
+               //     listOfButtons: [{
+                //        title: 'Enter ID number',
+               //         id:'id_Number'
+               //     }
+               //     ]
                 }
 
                 )
             }
-         */
+        
      
             if(typeOfMsg === 'text_message'){
                   //detect whether a text consist of numbers only 
@@ -77,10 +77,24 @@ router.post('/webhook', async (req, res) => {
                   let filterID = df.match(/^\d+$/);
 
                   if(filterID != null){
-                      await Whatsapp.sendText({
-                          message:`${recipientName},Contains only numbers`,
-                          recipientPhone: recipientPhone
-                      })
+                    await Whatsapp.sendSimpleButtons({
+                        message:`Hey ${recipientName}, Choose what operation do you want to perform`,
+                        recipientPhone: recipientPhone,
+                        listOfButtons: [{
+                            title: 'Pay your account',
+                            id: 'pay_account'
+                        },
+                        {
+                            title: 'Get statements',
+                            id: 'get_statements'
+                        },
+                        {
+                            title: 'Check balance',
+                            id: 'check_balance'
+                        }
+
+                        ]
+                    })
                   }
               }
              
