@@ -68,10 +68,7 @@ router.post('/webhook', async (req, res) => {
                 }
 
                 )
-            }
-        
-     
-            if(typeOfMsg === 'text_message'){
+            }else{
                   //detect whether a text consist of numbers only 
                   let df = incomingMessage.text.body;
                   let filterID = df.match(/^\d+$/);
