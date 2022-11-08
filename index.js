@@ -9,6 +9,9 @@ const Whatsapp = new WhatsappCloudAPI({
     graphAPIVersion: 'v15.0'
 });
 
+router.get("/",(req,res)=>{
+    res.status(200).send("Webhook working...");
+});
 
 
 router.get('/webhook', (req, res) => {
