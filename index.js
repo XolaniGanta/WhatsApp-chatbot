@@ -73,7 +73,7 @@ router.post('/webhook', async (req, res) => {
             let filterID = incomingTextMessage.match(/^\d+$/); //if it has numbers 
              if(filterID != null){
                 await Whatsapp.sendSimpleButtons({
-                        message:`Hey ${recipientName}, Choose what operation do you want to perform`,
+                        message:`Choose what operation do you want to perform`,
                         recipientPhone: recipientPhone,
                         listOfButtons: [{
                             title: 'Pay your account',
@@ -98,7 +98,7 @@ router.post('/webhook', async (req, res) => {
                 let buttonID = incomingMessage.button_reply.id;
                 if(buttonID === 'pay_account'){
                     await Whatsapp.sendSimpleButtons({
-                        message:`Hey ${recipientName}, Choose which account to settle`,
+                        message:`Choose which account to settle`,
                         recipientPhone: recipientPhone,
                         listOfButtons: [{
                             title: 'Sim Only',
