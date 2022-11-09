@@ -117,6 +117,25 @@ router.post('/webhook', async (req, res) => {
                     })
                 }
             }
+
+            if(typeOfMsg === 'simple_button_message'){
+                let buttonID = incomingMessage.button_reply.id;
+
+                if(buttonID === 'Sim_Only'){
+                    await Whatsapp.sendSimpleButtons({
+                        message:`Continue to check out page to finish your payment`,
+                        recipientPhone: recipientPhone,
+                        listOfButtons:[
+                            {
+                                title: 'Checkout',
+                                id: 'check_out'  
+                            }
+                        ]
+                    })
+                }
+            }
+
+
         }
 
         return res.sendStatus(200);
