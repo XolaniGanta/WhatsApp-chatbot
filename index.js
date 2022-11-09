@@ -93,45 +93,24 @@ router.post('/webhook', async (req, res) => {
 
             if(typeOfMsg === 'simple_button_message'){
                 let buttonID = incomingMessage.button_reply.id;
-              
-                if(buttonID === 'id_Number'){
+                if(buttonID === 'pay_account'){
                     await Whatsapp.sendSimpleButtons({
-                        message:`Hey ${recipientName}, Choose what operation do you want to perform`,
+                        message:`Hey ${recipientName}, Choose which account to settle`,
                         recipientPhone: recipientPhone,
                         listOfButtons: [{
-                            title: 'Pay your account',
-                            id: 'pay_account'
+                            title: 'Sim Only',
+                            id: 'Sim_Only'
                         },
                         {
-                            title: 'Get statements',
-                            id: 'get_statements'
+                            title: 'Ulefone',
+                            id: 'Ulefone_id'
                         },
                         {
-                            title: 'Check balance',
-                            id: 'check_balance'
+                            title: 'Pinnacle data',
+                            id: 'pinnacle_data'
                         }
 
                         ]
-                    })
-                }
-            }
-
-            if(typeOfMsg === 'simple_button_message'){
-                let buttonID = incomingMessage.button_reply.id;
-
-                if(buttonID === 'pay_account'){
-                    await Whatsapp.sendSimpleButtons({
-                        message:`Hey ${recipientName}, Which account do you want to settle`,
-                        recipientPhone: recipientPhone,
-                        listOfButtons:[
-                            {
-                            title: 'Sim-Only',
-                            id: 'Sim_Only'
-                        },{
-                            title: 'Ulefone',
-                            id: 'Contract_Id'
-                        }
-                    ]
                     })
                 }
             }
