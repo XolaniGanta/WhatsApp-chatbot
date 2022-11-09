@@ -68,7 +68,7 @@ router.post('/webhook', async (req, res) => {
             }
         } 
         if(typeOfMsg === 'text_message') {
-             if(filterID != null){
+             if(filterID != null || filterID.length === 13){
                 await Whatsapp.sendSimpleButtons({
                         message:`Hey ${recipientName}, Choose what operation do you want to perform`,
                         recipientPhone: recipientPhone,
