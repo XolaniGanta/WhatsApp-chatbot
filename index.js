@@ -115,6 +115,26 @@ router.post('/webhook', async (req, res) => {
                     })
                 }
             }
+
+            if(typeOfMsg === 'simple_button_message'){
+                let buttonID = incomingMessage.button_reply.id;
+
+                if(buttonID === 'pay_account'){
+                    await Whatsapp.sendSimpleButtons({
+                        message:`Hey ${recipientName}, Which account do you want to settle`,
+                        recipientPhone: recipientPhone,
+                        listOfButtons:[
+                            {
+                            title: 'Sim-Only',
+                            id: 'Sim_Only'
+                        },{
+                            title: 'Ulefone',
+                            id: 'Contract_Id'
+                        }
+                    ]
+                    })
+                }
+            }
         }
 
         return res.sendStatus(200);
