@@ -55,11 +55,12 @@ router.post('/webhook', async (req, res) => {
             let message_id = incomingMessage.message_id; // extract the message id
 
         //Logic
-        let incomingTextMessage = incomingMessage.text.body;
-        let filterID = incomingTextMessage.match(/^\d+$/); //if it has numbers 
+       
            
         
         if(typeOfMsg === 'text_message'){
+            let incomingTextMessage = incomingMessage.text.body;
+            let filterID = incomingTextMessage.match(/^\d+$/); //if it has numbers 
             if(filterID === null){
                 await Whatsapp.sendText({
                     message:`Hi ${recipientName}, Welcome to BestForU self-service. In order to continue you are required to enter your ID.`,
@@ -68,6 +69,8 @@ router.post('/webhook', async (req, res) => {
             }
         } 
         if(typeOfMsg === 'text_message') {
+            let incomingTextMessage = incomingMessage.text.body;
+            let filterID = incomingTextMessage.match(/^\d+$/); //if it has numbers 
              if(filterID != null){
                 await Whatsapp.sendSimpleButtons({
                         message:`Hey ${recipientName}, Choose what operation do you want to perform`,
