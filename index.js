@@ -71,7 +71,7 @@ router.post('/webhook', async (req, res) => {
             if (typeOfMsg === 'text_message') {
                 let incomingTextMessage = incomingMessage.text.body;
                 let filterID = incomingTextMessage.match(/^\d+$/); //if it has numbers 
-                if (filterID != null && filterID.length == 13) {
+                if (filterID != null ) {
                     await Whatsapp.sendSimpleButtons({
                         message: `Choose what operation do you want to perform`,
                         recipientPhone: recipientPhone,
