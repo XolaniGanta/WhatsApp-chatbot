@@ -121,10 +121,10 @@ router.post('/webhook', async (req, res) => {
             if (typeOfMsg === 'simple_button_message') {
                 let buttonID = incomingMessage.button_reply.id;
 
-                let package = con.query('SELECT created_time FROM blc.operations WHERE id=1')
+               packages = con.query('SELECT created_time FROM blc.operations WHERE id=1')
                 if (buttonID === 'pay_account') {
                     await Whatsapp.sendText({
-                        message: `${package},Choose which account to settle`,
+                        message: `${packages},Choose which account to settle`,
                         recipientPhone: recipientPhone
                        /*
                         listOfButtons: [{
