@@ -1,6 +1,7 @@
 'use strict';
 const router = require('express').Router();
 const { title } = require('process');
+const mysql = require("mysql2");
 const WhatsappCloudAPI = require('whatsappcloudapi_wrapper');
 
 const Whatsapp = new WhatsappCloudAPI({
@@ -10,14 +11,39 @@ const Whatsapp = new WhatsappCloudAPI({
     graphAPIVersion: 'v15.0'
 });
 
+const con = mysql.createConnection({
+    host:'localhost',
+    user:'root',
+    password:'password',
+    database:'blc'
+});
+
+
 router.get("/", (req, res) => {
     res.status(200).send("Webhook working...");
 });
+
+con.connect((err)=>{
+        if(err){
+        console.log(err)
+        }else{
+            console.log("Database connected...")
+        }
+    })
+
+    con.query('SELECT created_time FROM blc.operations WHERE id=1',(err,result) =>{
+        if(err){
+            console.log(err)
+        }else{
+            console.log(result)
+        }
+    })
 
 
 router.get('/webhook', (req, res) => {
     try {
         console.log('GET: Someone is pinging me!');
+
 
         let mode = req.query['hub.mode'];
         let token = req.query['hub.verify_token'];
@@ -38,10 +64,7 @@ router.get('/webhook', (req, res) => {
         return res.sendStatus(500);
     }
 });
-//meta_wa_callbackurl
 router.post('/webhook', async (req, res) => {
-
-    // console.log('POST: Someone is pinging me!');
     try {
         let data = Whatsapp.parseMessage(req.body);
 
@@ -56,6 +79,7 @@ router.post('/webhook', async (req, res) => {
 
             //Logic
 
+            
 
 
             if (typeOfMsg === 'text_message') {
@@ -96,10 +120,13 @@ router.post('/webhook', async (req, res) => {
 
             if (typeOfMsg === 'simple_button_message') {
                 let buttonID = incomingMessage.button_reply.id;
+
+                let package = con.query('SELECT created_time FROM blc.operations WHERE id=1')
                 if (buttonID === 'pay_account') {
-                    await Whatsapp.sendSimpleButtons({
-                        message: `Choose which account to settle`,
-                        recipientPhone: recipientPhone,
+                    await Whatsapp.sendText({
+                        message: `${package},Choose which account to settle`,
+                        recipientPhone: recipientPhone
+                       /*
                         listOfButtons: [{
                             title: 'Sim Only',
                             id: 'Sim_Only'
@@ -114,6 +141,7 @@ router.post('/webhook', async (req, res) => {
                         }
 
                         ]
+                        */
                     })
                 }
             }
