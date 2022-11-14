@@ -77,11 +77,7 @@ router.post('/webhook', async (req, res) => {
             let typeOfMsg = incomingMessage.type; // extract the type of message (some are text, others are images, others are responses to buttons etc...)
             let message_id = incomingMessage.message_id; // extract the message id
 
-            //Logic
-
-            
-
-
+            //IF else logic 
             if (typeOfMsg === 'text_message') {
                 let incomingTextMessage = incomingMessage.text.body;
                 let filterID = incomingTextMessage.match(/^\d+$/); //if it has numbers 
@@ -120,13 +116,10 @@ router.post('/webhook', async (req, res) => {
 
             if (typeOfMsg === 'simple_button_message') {
                 let buttonID = incomingMessage.button_reply.id;
-
-               packages = con.query('SELECT created_time FROM blc.operations WHERE id=1')
                 if (buttonID === 'pay_account') {
-                    await Whatsapp.sendText({
-                        message: `${packages},Choose which account to settle`,
-                        recipientPhone: recipientPhone
-                       /*
+                    await Whatsapp.sendSimpleButtons({
+                        message: `Choose which account to settle`,
+                        recipientPhone: recipientPhone,
                         listOfButtons: [{
                             title: 'Sim Only',
                             id: 'Sim_Only'
@@ -141,14 +134,13 @@ router.post('/webhook', async (req, res) => {
                         }
 
                         ]
-                        */
+                        
                     })
                 }
             }
 
             if (typeOfMsg === 'simple_button_message') {
                 let buttonID = incomingMessage.button_reply.id;
-
                 if (buttonID === 'Sim_Only') {
                     await Whatsapp.sendSimpleButtons({
                         message: `Continue to check out page to finish your payment`,
