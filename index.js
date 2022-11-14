@@ -91,7 +91,7 @@ router.post('/webhook', async (req, res) => {
             if (typeOfMsg === 'text_message') {
                 let incomingTextMessage = incomingMessage.text.body;
                 let filterID = incomingTextMessage.match(/^\d+$/); //if it has numbers 
-                if (filterID != null && filterID.length === 13) {
+                if (filterID != null) {
                     await Whatsapp.sendSimpleButtons({
                         message: `Choose what operation do you want to perform`,
                         recipientPhone: recipientPhone,
@@ -111,11 +111,6 @@ router.post('/webhook', async (req, res) => {
                         ]
                     })
 
-                }else{
-                    await Whatsapp.sendText({
-                        message:`Invalid ID number. Please enter ID again`,
-                        recipientPhone: recipientPhone
-                    })
                 }
             }
 
@@ -148,11 +143,11 @@ router.post('/webhook', async (req, res) => {
                 let buttonID = incomingMessage.button_reply.id;
                 if (buttonID === 'Sim_Only') {
                     await Whatsapp.sendSimpleButtons({
-                        message: `Continue to check out page to finish your payment`,
+                        message: `CHECKOUT:\nChose to settle the Sim only contract\nPress the continue button to make your payment`,
                         recipientPhone: recipientPhone,
                         listOfButtons: [
                             {
-                                title: 'Checkout',
+                                title: 'Continue',
                                 id: 'check_out'
                             }
                         ]
