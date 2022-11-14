@@ -146,7 +146,7 @@ router.post('/webhook', async (req, res) => {
                 let buttonID = incomingMessage.button_reply.id;
                 if (buttonID === 'Sim_Only') {
                     await Whatsapp.sendSimpleButtons({
-                        message: `CHECKOUT:\nChose to settle the Sim only contract\nPress the continue button to make your payment`,
+                        message: `CHECKOUT:\nYou have chosen the settle the Sim only contract\nPress the continue button to make your payment`,
                         recipientPhone: recipientPhone,
                         listOfButtons: [
                             {
@@ -157,7 +157,6 @@ router.post('/webhook', async (req, res) => {
                     })
                 }
             }
-
             await Whatsapp.markMessageAsRead({
                 message_id,
             });
