@@ -11,6 +11,7 @@ const Whatsapp = new WhatsappCloudAPI({
     graphAPIVersion: 'v15.0'
 });
 
+//DB configurations
 const con = mysql.createConnection({
     host:'localhost',
     user:'root',
@@ -23,6 +24,7 @@ router.get("/", (req, res) => {
     res.status(200).send("Webhook working...");
 });
 
+//DB connection
 con.connect((err)=>{
         if(err){
         console.log(err)
@@ -31,7 +33,8 @@ con.connect((err)=>{
         }
     })
 
-    con.query('SELECT created_time FROM blc.operations WHERE id=1',(err,result) =>{
+   //Query
+    con.query('SELECT created_time FROM blc.operations WHERE id=2',(err,result) =>{
         if(err){
             console.log(err)
         }else{
@@ -91,7 +94,7 @@ router.post('/webhook', async (req, res) => {
             if (typeOfMsg === 'text_message') {
                 let incomingTextMessage = incomingMessage.text.body;
                 let filterID = incomingTextMessage.match(/^\d+$/); //contains only numbers 
-                if (filterID != null) {
+                if (filterID != null && filterID.length != 13) {
                     await Whatsapp.sendSimpleButtons({
                         message: `Choose what operation do you want to perform`,
                         recipientPhone: recipientPhone,
@@ -158,8 +161,6 @@ router.post('/webhook', async (req, res) => {
             await Whatsapp.markMessageAsRead({
                 message_id,
             });
-
-
         }
 
         return res.sendStatus(200);
