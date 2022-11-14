@@ -33,7 +33,16 @@ con.connect((err)=>{
         }
     })
 
+
+const getPackage = async (id)=>{
+    const[rows] = await con.execute('SELECT id_type FROM thinkadamdb.allrequests WHERE id=?',[id]);
+    if(rows.length > 0) return rows.message;
+    return false;
+}
+
+
    //Query
+   /*
     con.query('SELECT id_type FROM thinkadamdb.allrequests WHERE id=2',(err,result) =>{
         if(err){
             console.log(err)
@@ -41,11 +50,12 @@ con.connect((err)=>{
             console.log(result)
         }
     })
+    */
 
 
 router.get('/webhook', (req, res) => {
     try {
-        console.log('GET: Someone is pinging me!');
+        console.log('GET me!');
 
 
         let mode = req.query['hub.mode'];
@@ -70,7 +80,8 @@ router.get('/webhook', (req, res) => {
 router.post('/webhook', async (req, res) => {
     try {
         let data = Whatsapp.parseMessage(req.body);
-
+        const packages = await getPackage();
+        console.log(packages);
         console.log(JSON.stringify(data, null, 2));
 
         if (data?.isMessage) {
