@@ -16,7 +16,7 @@ const con = mysql.createConnection({
     host:'localhost',
     user:'root',
     password:'password',
-    database:'blc'
+    database:'thinkadamdb'
 });
 
 
@@ -34,7 +34,7 @@ con.connect((err)=>{
     })
 
    //Query
-    con.query('SELECT created_time FROM blc.operations WHERE id=2',(err,result) =>{
+    con.query('SELECT id_type FROM thinkadamdb.allrequests WHERE id=2',(err,result) =>{
         if(err){
             console.log(err)
         }else{
@@ -94,7 +94,7 @@ router.post('/webhook', async (req, res) => {
             if (typeOfMsg === 'text_message') {
                 let incomingTextMessage = incomingMessage.text.body;
                 let filterID = incomingTextMessage.match(/^\d+$/); //contains only numbers 
-                if (filterID != null) {
+                if (filterID.length === 13 && filterID != null) {
                     await Whatsapp.sendSimpleButtons({
                         message: `Choose what operation do you want to perform`,
                         recipientPhone: recipientPhone,
@@ -157,6 +157,19 @@ router.post('/webhook', async (req, res) => {
                     })
                 }
             }
+
+            if (typeOfMsg === 'text_message') {
+                let incomingTextMessage = incomingMessage.text.body;
+                let filterID = incomingTextMessage.match(/^\d+$/); //if it has numbers 
+                if (filterID === null) {
+                    await Whatsapp.sendText({
+                        message: `Hi ${recipientName}, Welcome to BestForU self-service. In order to continue you are required to enter your ID.`,
+                        recipientPhone: recipientPhone
+                    })
+                }
+            }
+        
+        
 
             await Whatsapp.markMessageAsRead({
                 message_id,
