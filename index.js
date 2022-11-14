@@ -93,9 +93,8 @@ router.post('/webhook', async (req, res) => {
             }
             if (typeOfMsg === 'text_message') {
                 let incomingTextMessage = incomingMessage.text.body;
-                let filterID = incomingTextMessage.match(/^\d+$/); //contains only numbers
-                filterID=this.length === 13; // has to be equal to 13
-                if (filterID != null && filterID.length == true) {
+                let filterID = incomingTextMessage.match(/^\d+$/);
+                if (filterID != null ) {
                     await Whatsapp.sendSimpleButtons({
                         message: `Choose what operation do you want to perform`,
                         recipientPhone: recipientPhone,
@@ -115,11 +114,6 @@ router.post('/webhook', async (req, res) => {
                         ]
                     })
 
-                }else{
-                    await Whatsapp.sendText({
-                        message: `Enter ID number once again`,
-                        recipientPhone: recipientPhone
-                    })
                 }
             }
 
@@ -163,19 +157,6 @@ router.post('/webhook', async (req, res) => {
                     })
                 }
             }
-
-            if (typeOfMsg === 'text_message') {
-                let incomingTextMessage = incomingMessage.text.body;
-                let filterID = incomingTextMessage.match(/^\d+$/); //if it has numbers 
-                if (filterID === null) {
-                    await Whatsapp.sendText({
-                        message: `Hi ${recipientName}, Welcome to BestForU self-service. In order to continue you are required to enter your ID.`,
-                        recipientPhone: recipientPhone
-                    })
-                }
-            }
-        
-        
 
             await Whatsapp.markMessageAsRead({
                 message_id,
