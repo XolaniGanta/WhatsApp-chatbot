@@ -1,7 +1,6 @@
 'use strict';
 const router = require('express').Router();
 
-//const mysql = require("mysql2");
 const WhatsappCloudAPI = require('whatsappcloudapi_wrapper');
 
 
@@ -21,10 +20,6 @@ const Whatsapp = new WhatsappCloudAPI({
     database:'thinkadamdb'
 });
 */
-
-
-
-
 router.get("/", (req, res) => {
     res.status(200).send("Webhook working...");
 });
@@ -58,11 +53,6 @@ const getPackage = async (id)=>{
         }
     })
     */
-
-const db = require('./database');
-
-
-
 router.get('/webhook', (req, res) => {
     try {
         console.log('GET me!');
@@ -90,8 +80,6 @@ router.get('/webhook', (req, res) => {
 router.post('/webhook', async (req, res) => {
     try {
         let data = Whatsapp.parseMessage(req.body);
-        const packages = await db.testQuery();
-        console.log(packages);
         console.log(JSON.stringify(data, null, 2));
 
         if (data?.isMessage) {
