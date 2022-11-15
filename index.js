@@ -44,6 +44,9 @@ const getPackage = async (id)=>{
     return false;
 }
 
+const packages = await getPackage();
+        console.log(packages);
+
 
    //Query
    /*
