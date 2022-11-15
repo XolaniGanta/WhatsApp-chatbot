@@ -27,7 +27,7 @@ router.get("/", (req, res) => {
 });
 
 //DB connection
-/*
+
 con.connect((err)=>{
         if(err){
         console.log(err)
@@ -35,11 +35,11 @@ con.connect((err)=>{
             console.log("Database connected...")
         }
     })
-    */
+    
 
 
 const getPackage = async (id)=>{
-    const con = await createConnection();
+   // const con = await createConnection();
     const[rows] = await con.execute('SELECT id_type FROM thinkadamdb.allrequests WHERE id=?',[id]);
     if(rows.length > 0) return rows.id_type;
     return false;
