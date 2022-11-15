@@ -3,7 +3,7 @@ const router = require('express').Router();
 const { title } = require('process');
 const mysql = require("mysql2/promise");
 const WhatsappCloudAPI = require('whatsappcloudapi_wrapper');
-const { createConnection } = require('net');
+
 
 const Whatsapp = new WhatsappCloudAPI({
     accessToken: process.env.Meta_WA_accessToken,
