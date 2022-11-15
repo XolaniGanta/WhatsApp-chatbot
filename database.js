@@ -1,33 +1,22 @@
-const { application } = require("express");
-const express = require("express");
-const mysql = require("mysql2");
-const app = require(express)
 
-const con = mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'password',
-    database:'blc'
-})
+const mysql = require('mysql2/promise');
 
-con.connect((err)=>{
-    if(err){
-        console.log(err)
-    }else{
-        console.log("")
-    }
-})
-
-let getPackages = (req,res) => {
-    con.query('SELECT response_body FROM blc.operations WHERE id=1',(err,result) =>{
-        if(err){
-            console.log(err)
-        }else{
-            console.log(result)
-        }
-    })
+const createConnection = async () => {
+    return await mysql.createConnection({
+        host:'localhost',
+        user:'root',
+        password:'password',
+        database:'thinkadamdb'
+    });
+    
+} 
+const getPackage = async (id)=>{
+    const con = await createConnection();
+    const[rows] =await con.execute('SELECT id_type FROM thinkadamdb.allrequests WHERE id=?',[id]);
+    if(rows.length > 0) return rows.id_type;
+    return false;
 }
-
-module.exports ={
-    getPackages: getPackages
+module.exports = {
+    createConnection,
+    getPackage
 }

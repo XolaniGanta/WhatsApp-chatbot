@@ -1,7 +1,7 @@
 'use strict';
 const router = require('express').Router();
 
-const mysql = require("mysql2");
+//const mysql = require("mysql2");
 const WhatsappCloudAPI = require('whatsappcloudapi_wrapper');
 
 
@@ -13,13 +13,14 @@ const Whatsapp = new WhatsappCloudAPI({
 });
 
 //DB configurations
-
+/*
  const con = mysql.createConnection({
     host:'localhost',
     user:'root',
     password:'password',
     database:'thinkadamdb'
 });
+*/
 
 
 
@@ -29,7 +30,7 @@ router.get("/", (req, res) => {
 });
 
 //DB connection
-
+/*
 con.connect((err)=>{
         if(err){
         console.log(err)
@@ -37,17 +38,15 @@ con.connect((err)=>{
             console.log("Database connected...")
         }
     })
+    */
  
-
+/*
 const getPackage = async (id)=>{
     const[rows] =await con.execute('SELECT id_type FROM thinkadamdb.allrequests WHERE id=?',[id]);
     if(rows.length > 0) return rows.id_type;
     return false;
 }
-
-const packages = getPackage();
-        console.log(packages);
-
+*/
 
    //Query
    /*
@@ -59,6 +58,9 @@ const packages = getPackage();
         }
     })
     */
+
+const db = require('./database');
+
 
 
 router.get('/webhook', (req, res) => {
@@ -88,7 +90,7 @@ router.get('/webhook', (req, res) => {
 router.post('/webhook', async (req, res) => {
     try {
         let data = Whatsapp.parseMessage(req.body);
-        const packages = await getPackage();
+        const packages = await db.getPackage()
         console.log(packages);
         console.log(JSON.stringify(data, null, 2));
 
