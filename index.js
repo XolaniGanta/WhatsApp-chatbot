@@ -20,13 +20,7 @@ const createConnection = async () => {
     password:'password',
     database:'thinkadamdb'
 });
-con.connect((err)=>{
-    if(err){
-    console.log(err)
-    }else{
-        console.log("Database connected...")
-    }
-})
+(await con).connect();
 
 }
 
