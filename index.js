@@ -124,11 +124,6 @@ router.post('/webhook', async (req, res) => {
                     })
 
                 }
-            }else{
-                await Whatsapp.sendText({
-                    message: `Please enter id `,
-                    recipientPhone: recipientPhone
-                })
             }
 
             if (typeOfMsg === 'simple_button_message') {
