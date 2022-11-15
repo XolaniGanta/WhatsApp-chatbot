@@ -15,7 +15,7 @@ const Whatsapp = new WhatsappCloudAPI({
 //DB configurations
 const createConnection = async () => {
  return await mysql.createConnection({
-    host:'127.0.0.1',
+    host:'localhost',
     user:'root',
     password:'password',
     database:'thinkadamdb'
