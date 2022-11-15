@@ -13,23 +13,23 @@ const Whatsapp = new WhatsappCloudAPI({
 });
 
 //DB configurations
-const createConnection = async () => {
+
  const con = mysql.createConnection({
     host:'localhost',
     user:'root',
     password:'password',
     database:'thinkadamdb'
 });
-(await con).connect();
 
-}
+
+
 
 router.get("/", (req, res) => {
     res.status(200).send("Webhook working...");
 });
 
 //DB connection
-/*
+
 con.connect((err)=>{
         if(err){
         console.log(err)
@@ -37,11 +37,10 @@ con.connect((err)=>{
             console.log("Database connected...")
         }
     })
-    */
+ 
 
 const getPackage = async (id)=>{
-    const cons = await createConnection();
-    const[rows] =await cons.execute('SELECT id_type FROM thinkadamdb.allrequests WHERE id=?',[id]);
+    const[rows] =await con.execute('SELECT id_type FROM thinkadamdb.allrequests WHERE id=?',[id]);
     if(rows.length > 0) return rows.id_type;
     return false;
 }
