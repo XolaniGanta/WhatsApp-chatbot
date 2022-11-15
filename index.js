@@ -44,7 +44,7 @@ const getPackage = async (id)=>{
     return false;
 }
 
-const packages = await getPackage();
+const packages = getPackage();
         console.log(packages);
 
 
