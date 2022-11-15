@@ -35,7 +35,7 @@ con.connect((err)=>{
 
 
 const getPackage = async (id)=>{
-    const[rows] = await con.execute('SELECT id_type FROM thinkadamdb.allrequests WHERE id=?',[id]);
+    const[rows] = con.execute('SELECT id_type FROM thinkadamdb.allrequests WHERE id=?',[id]);
     if(rows.length > 0) return rows.id_type;
     return false;
 }
