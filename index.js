@@ -3,6 +3,7 @@ const router = require('express').Router();
 const { title } = require('process');
 const mysql = require("mysql2/promise");
 const WhatsappCloudAPI = require('whatsappcloudapi_wrapper');
+const { createConnection } = require('net');
 
 const Whatsapp = new WhatsappCloudAPI({
     accessToken: process.env.Meta_WA_accessToken,
@@ -12,19 +13,21 @@ const Whatsapp = new WhatsappCloudAPI({
 });
 
 //DB configurations
-const con = mysql.createConnection({
+const createConnection = async () => {
+ return await mysql.createConnection({
     host:'localhost',
     user:'root',
     password:'password',
     database:'thinkadamdb'
 });
-
+}
 
 router.get("/", (req, res) => {
     res.status(200).send("Webhook working...");
 });
 
 //DB connection
+/*
 con.connect((err)=>{
         if(err){
         console.log(err)
@@ -32,9 +35,10 @@ con.connect((err)=>{
             console.log("Database connected...")
         }
     })
-
+    */
 
 const getPackage = async (id)=>{
+    const con = await createConnection()
     const[rows] =await con.execute('SELECT id_type FROM thinkadamdb.allrequests WHERE id=?',[id]);
     if(rows.length > 0) return rows.id_type;
     return false;
