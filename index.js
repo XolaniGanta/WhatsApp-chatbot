@@ -12,14 +12,12 @@ const Whatsapp = new WhatsappCloudAPI({
 });
 
 //DB configurations
-const createConnection = async () =>{
-  return await mysql.createConnection({
+const con = mysql.createConnection({
     host:'localhost',
     user:'root',
     password:'password',
     database:'thinkadamdb'
 });
-}
 
 
 router.get("/", (req, res) => {
@@ -27,7 +25,6 @@ router.get("/", (req, res) => {
 });
 
 //DB connection
-
 con.connect((err)=>{
         if(err){
         console.log(err)
@@ -35,11 +32,9 @@ con.connect((err)=>{
             console.log("Database connected...")
         }
     })
-    
 
 
 const getPackage = async (id)=>{
-   // const con = await createConnection();
     const[rows] = await con.execute('SELECT id_type FROM thinkadamdb.allrequests WHERE id=?',[id]);
     if(rows.length > 0) return rows.id_type;
     return false;
