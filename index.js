@@ -1,7 +1,7 @@
 'use strict';
 const router = require('express').Router();
-const { title } = require('process');
-const mysql = require("mysql2/promise");
+
+const mysql = require("mysql2");
 const WhatsappCloudAPI = require('whatsappcloudapi_wrapper');
 
 
