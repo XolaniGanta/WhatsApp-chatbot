@@ -90,7 +90,7 @@ router.get('/webhook', (req, res) => {
 router.post('/webhook', async (req, res) => {
     try {
         let data = Whatsapp.parseMessage(req.body);
-        const packages = await db.getPackage()
+        const packages = await db.testQuery();
         console.log(packages);
         console.log(JSON.stringify(data, null, 2));
 

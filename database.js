@@ -1,15 +1,17 @@
 
 const mysql = require('mysql2/promise');
 
-const createConnection = async () => {
-    return await mysql.createConnection({
-        host:'localhost',
-        user:'root',
-        password:'password',
-        database:'thinkadamdb'
-    });
-    
-} 
+const pool = mysql.createPool({
+    host:'localhost',
+    user:'root',
+    password:'password',
+    database:'thinkadamdb'
+
+})
+   async function testQuery(){
+    const res = await pool.query('SELECT id_type FROM thinkadamdb.allrequests WHERE id=1');
+    if(res.length > 0) return res.id_type;
+   }
 const getPackage = async (id)=>{
     const con = await createConnection();
     const[rows] =await con.execute('SELECT id_type FROM thinkadamdb.allrequests WHERE id=?',[id]);
@@ -17,6 +19,7 @@ const getPackage = async (id)=>{
     return false;
 }
 module.exports = {
-    createConnection,
-    getPackage
+    getPackage,
+    testQuery
+
 }
