@@ -4,8 +4,6 @@ const router = require('express').Router();
 const WhatsappCloudAPI = require('whatsappcloudapi_wrapper');
 const mysql =require('mysql2');
 
-const dataStore =[];
-
 const Whatsapp = new WhatsappCloudAPI({
     accessToken: process.env.Meta_WA_accessToken,
     senderPhoneNumberId: process.env.Meta_WA_SenderPhoneNumberId,
@@ -15,13 +13,7 @@ const Whatsapp = new WhatsappCloudAPI({
 
 //DB configurations
 
- const con = mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'password',
-    database:'thinkadamdb'
-});
-
+ 
 router.get("/", (req, res) => {
     res.status(200).send("Webhook working...");
 });
@@ -74,6 +66,14 @@ router.post('/webhook', async (req, res) => {
         let data = Whatsapp.parseMessage(req.body);
         console.log(JSON.stringify(data, null, 2));
 
+    const con = mysql.createConnection({
+            host:'localhost',
+            user:'root',
+            password:'password',
+            database:'thinkadamdb'
+        });
+        
+
         con.connect(function(err){
             if(err){
                 throw err;
@@ -90,9 +90,6 @@ router.post('/webhook', async (req, res) => {
             })
             })
         })
-        
-
-        
 
         if (data?.isMessage) {
             let incomingMessage = data.message;
