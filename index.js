@@ -2,7 +2,9 @@
 const router = require('express').Router();
 
 const WhatsappCloudAPI = require('whatsappcloudapi_wrapper');
+const mysql =require('mysql2');
 
+const dataStore =[];
 
 const Whatsapp = new WhatsappCloudAPI({
     accessToken: process.env.Meta_WA_accessToken,
@@ -12,29 +14,19 @@ const Whatsapp = new WhatsappCloudAPI({
 });
 
 //DB configurations
-/*
+
  const con = mysql.createConnection({
     host:'localhost',
     user:'root',
     password:'password',
     database:'thinkadamdb'
 });
-*/
+
 router.get("/", (req, res) => {
     res.status(200).send("Webhook working...");
 });
 
 //DB connection
-/*
-con.connect((err)=>{
-        if(err){
-        console.log(err)
-        }else{
-            console.log("Database connected...")
-        }
-    })
-    */
- 
 /*
 const getPackage = async (id)=>{
     const[rows] =await con.execute('SELECT id_type FROM thinkadamdb.allrequests WHERE id=?',[id]);
@@ -82,13 +74,34 @@ router.post('/webhook', async (req, res) => {
         let data = Whatsapp.parseMessage(req.body);
         console.log(JSON.stringify(data, null, 2));
 
+        con.connect(function(err){
+            if(err){
+                throw err;
+            }
+            console.log("Database connected...");
+
+            con.query('SELECT id_type FROM thinkadamdb.allrequests',function(err,result,fields){
+                if(err){
+                    throw err;
+                }
+
+            result.forEach(packages => {
+                console.log(packages.id_type);
+            })
+            })
+        })
+        
+
+        
+
         if (data?.isMessage) {
             let incomingMessage = data.message;
             let recipientPhone = incomingMessage.from.phone; // extract the phone number of sender
             let recipientName = incomingMessage.from.name;
             let typeOfMsg = incomingMessage.type; // extract the type of message (some are text, others are images, others are responses to buttons etc...)
             let message_id = incomingMessage.message_id; // extract the message id
-
+    
+         
             //IF else logic 
             if (typeOfMsg === 'text_message') {
                 let incomingTextMessage = incomingMessage.text.body;
