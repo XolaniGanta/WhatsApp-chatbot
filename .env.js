@@ -2,7 +2,7 @@ const production = {
     ...process.env,
     NODE_ENV: process.env.NODE_ENV || 'production',
    // PORT: '9000',
-    Meta_WA_accessToken:'EAALY24IFZABUBAI1YZCPsWRZCxeBLG7GglvX6LkSERWjkuIeAm0MImPSBoPFwIjFY61vagBoj6gyOsI98gNglJ9MAcksDZCPDjmMHbsceTUhZBkAISuYexEJWl4spEGnweeFTM0fZBlk2qWzjU2efaZAyWtp12eIkoLdJSSZB9QiZBkP45F9LDCOtjA0k8u0WtXwqZAZASqGaNZCdHgwphfnpEqL',
+    Meta_WA_accessToken:'EAALY24IFZABUBAPqkY4vHgSXCMGRzTZASD3DTOnA103AdJHkhd9D4jZAAyaa6ALvMWFBSHO20YlATqBeTq865EXWo1vNEy6fMOWkLGVkdjX3EcctuRi2mQZA1e7JO449eloXoBJVruqaJZA3ltJCp5C5hUM7izAffNunKjed4gYzwGx6ftYbKBhJZCbP3Saf35y4wMpaQcTJGv7CgQxNKu',
     Meta_WA_SenderPhoneNumberId: '100501282880988',
     Meta_WA_wabaId: '110726525175448',
     Meta_WA_VerifyToken: 'APS',
