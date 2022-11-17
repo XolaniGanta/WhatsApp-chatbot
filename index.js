@@ -12,7 +12,6 @@ const Whatsapp = new WhatsappCloudAPI({
 });
 
 //DB configurations
-
  
 router.get("/", (req, res) => {
     res.status(200).send("Webhook working...");
