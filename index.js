@@ -2,7 +2,6 @@
 const router = require('express').Router();
 
 const WhatsappCloudAPI = require('whatsappcloudapi_wrapper');
-//const mysql =require('mysql2');
 
 const Whatsapp = new WhatsappCloudAPI({
     accessToken: process.env.Meta_WA_accessToken,
@@ -11,31 +10,11 @@ const Whatsapp = new WhatsappCloudAPI({
     graphAPIVersion: 'v15.0'
 });
 
-//DB configurations
  
 router.get("/", (req, res) => {
     res.status(200).send("Webhook working...");
 });
 
-//DB connection
-/*
-const getPackage = async (id)=>{
-    const[rows] =await con.execute('SELECT id_type FROM thinkadamdb.allrequests WHERE id=?',[id]);
-    if(rows.length > 0) return rows.id_type;
-    return false;
-}
-*/
-
-   //Query
-   /*
-    con.query('SELECT id_type FROM thinkadamdb.allrequests WHERE id=2',(err,result) =>{
-        if(err){
-            console.log(err)
-        }else{
-            console.log(result)
-        }
-    })
-    */
 router.get('/webhook', (req, res) => {
     try {
         console.log('GET me!');
@@ -86,8 +65,8 @@ router.post('/webhook', async (req, res) => {
             }
             if (typeOfMsg === 'text_message') {
                 let incomingTextMessage = incomingMessage.text.body;
-                let filterID = incomingTextMessage.match(/^\d+$/);
-                if (filterID != null) {
+                let filterID = incomingTextMessage.match(/^\d+$/) && incomingTextMessage.length === 13; //extracting digits
+                if (filterID != null && filterID.length === 13) {
                     await Whatsapp.sendSimpleButtons({
                         message: `Choose what operation do you want to perform`,
                         recipientPhone: recipientPhone,
@@ -103,13 +82,11 @@ router.post('/webhook', async (req, res) => {
                             title: 'Check balance',
                             id: 'check_balance'
                         }
-
                         ]
                     })
 
                 }
             }
-
             if (typeOfMsg === 'simple_button_message') {
                 let buttonID = incomingMessage.button_reply.id;
                 if (buttonID === 'pay_account') {
@@ -134,7 +111,6 @@ router.post('/webhook', async (req, res) => {
                     })
                 }
             }
-
             if (typeOfMsg === 'simple_button_message') {
                 let buttonID = incomingMessage.button_reply.id;
                 if (buttonID === 'Sim_Only') {
