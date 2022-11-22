@@ -86,7 +86,7 @@ router.post('/webhook', async (req, res) => {
                         ]
                     })
 
-                } else{
+                } else if(filterID != null){
                     await Whatsapp.sendText({
                         message: `Please enter a valid id number`,
                         recipientPhone: recipientPhone
