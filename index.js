@@ -65,6 +65,7 @@ router.post('/webhook', async (req, res) => {
             }
             if (typeOfMsg === 'text_message') {
                 let incomingTextMessage = incomingMessage.text.body;
+                console.log(incomingTextMessage.length);
                 let filterID = incomingTextMessage.match(/^\d+$/) && incomingTextMessage.length === 13; //extracting digits
                 if (filterID != null) {
                     await Whatsapp.sendSimpleButtons({
