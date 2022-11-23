@@ -70,13 +70,7 @@ router.post('/webhook', async (req, res) => {
               //  let validDate = incomingTextMessage;
                 let count = incomingTextMessage.length; // length of the ID
                 let filterID = incomingTextMessage.match(/^\d+$/); //extracting digits
-                let dateCount = new Date(filterID.substring(0,2),filterID.substring(2,4)-1,filterID.substring(4,6));
-                let id_date = dateCount.getDate();
-                let id_month = dateCount.getMonth();
-                let id_year = dateCount.getFullYear();
-                
-                if (filterID != null && count === 13 && dateCount.getFullYear()==filterID.substring(0,2)
-                    && id_month == filterID.substring(2,4)-1 && id_date == filterID.substring(4,6)) {
+                if (filterID != null && count === 13 ) {
                     await Whatsapp.sendSimpleButtons({
                         message: `Choose what operation do you want to perform`,
                         recipientPhone: recipientPhone,
