@@ -95,7 +95,7 @@ router.post('/webhook', async (req, res) => {
                 }
             }
             if (typeOfMsg === 'simple_button_message') {
-                const bd = dbRoute.createCon;
+                const bd = dbRoute.queryCon;
                 //console.log(bd);
                 let buttonID = incomingMessage.button_reply.id;
                 if (buttonID === 'pay_account') {

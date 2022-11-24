@@ -15,6 +15,10 @@ const con = mysql.createConnection({
             }
             console.log("Database connected...")
 
+        })
+    
+    }
+    const queryCon = async () => {
             con.query('SELECT id_type FROM thinkadamdb.allrequests',function(err,result, fields){
                 if(err){
                     throw err;
@@ -24,11 +28,13 @@ const con = mysql.createConnection({
             })
 
             })
-        })
+        }
+        
 
-}
+
 module.exports = {
-    createCon: createCon
+    createCon: createCon,
+    queryCon: queryCon
 }
 
 
