@@ -27,7 +27,8 @@ const con = mysql.createConnection({
         })
 
 }
-const rev = createCon();
-console.log(rev);
+module.exports = {
+    createCon: createCon
+}
 
 

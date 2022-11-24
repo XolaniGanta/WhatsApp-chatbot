@@ -1,6 +1,8 @@
 'use strict';
 const router = require('express').Router();
 
+const dbRoute = require('./db');
+
 const WhatsappCloudAPI = require('whatsappcloudapi_wrapper');
 
 const Whatsapp = new WhatsappCloudAPI({
@@ -10,7 +12,6 @@ const Whatsapp = new WhatsappCloudAPI({
     graphAPIVersion: 'v15.0'
 });
 
- 
 router.get("/", (req, res) => {
     res.status(200).send("Webhook working...");
 });
@@ -65,9 +66,6 @@ router.post('/webhook', async (req, res) => {
             }
             if (typeOfMsg === 'text_message') {
                 let incomingTextMessage = incomingMessage.text.body;
-                //vaidating DOB
-               
-              //  let validDate = incomingTextMessage;
                 let count = incomingTextMessage.length; // length of the ID
                 let filterID = incomingTextMessage.match(/^\d+$/); //extracting digits
                 if (filterID != null && count === 13 ) {
@@ -97,10 +95,12 @@ router.post('/webhook', async (req, res) => {
                 }
             }
             if (typeOfMsg === 'simple_button_message') {
+                const bd = dbRoute.createCon;
+                //console.log(bd);
                 let buttonID = incomingMessage.button_reply.id;
                 if (buttonID === 'pay_account') {
                     await Whatsapp.sendSimpleButtons({
-                        message: `Choose which account to settle`,
+                        message: `Choose which account to settle,${bd}`,
                         recipientPhone: recipientPhone,
                         listOfButtons: [{
                             title: 'Sim Only',
