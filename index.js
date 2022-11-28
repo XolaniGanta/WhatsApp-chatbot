@@ -76,10 +76,7 @@ router.post('/webhook', async (req, res) => {
                             title: 'Pay your account',
                             id: 'pay_account'
                         },
-                        {
-                            title: 'Get statements',
-                            id: 'get_statements'
-                        },
+                       
                         {
                             title: 'Check balance',
                             id: 'check_balance'
@@ -94,13 +91,14 @@ router.post('/webhook', async (req, res) => {
                     })
                 }
             }
+            //if the pay account is pressed
             if (typeOfMsg === 'simple_button_message') {
-                const bd = dbRoute.queryCon;
+               // const bd = dbRoute.queryCon;
                 //console.log(bd);
                 let buttonID = incomingMessage.button_reply.id;
                 if (buttonID === 'pay_account') {
                     await Whatsapp.sendSimpleButtons({
-                        message: `Choose which account to settle,${bd}`,
+                        message: `Choose which account to settle`,
                         recipientPhone: recipientPhone,
                         listOfButtons: [{
                             title: 'Sim Only',
@@ -120,6 +118,18 @@ router.post('/webhook', async (req, res) => {
                     })
                 }
             }
+
+            if(typeOfMsg === 'simple_button_message'){
+                let buttonID = incomingMessage.button_reply.id;
+                if (buttonID === 'check_balance'){
+                    await Whatsapp.sendDocument({
+                        recipientPhone: recipientPhone,
+                        caption: 'Statement',
+                        url: 'http://pdfkit.org/demo/out.pdf',
+                    })
+                }
+            }
+            
             if (typeOfMsg === 'simple_button_message') {
                 let buttonID = incomingMessage.button_reply.id;
                 if (buttonID === 'Sim_Only') {

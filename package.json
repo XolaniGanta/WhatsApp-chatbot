@@ -15,6 +15,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.20",
+    "pdfkit": "^0.13.0",
     "request": "^2.88.2",
     "whatsappcloudapi_wrapper": "^1.0.13"
   }
