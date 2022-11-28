@@ -124,7 +124,7 @@ router.post('/webhook', async (req, res) => {
                 if (buttonID === 'check_balance'){
                     await Whatsapp.sendDocument({
                         recipientPhone: recipientPhone,
-                        caption: 'Statement',
+                        caption: 'Statement\n To perform another transcation please re-enter your id nuumber',
                         url: 'http://pdfkit.org/demo/out.pdf',
                     })
                 }
