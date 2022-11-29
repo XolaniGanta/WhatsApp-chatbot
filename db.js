@@ -29,9 +29,6 @@ const con = mysql.createConnection({
 
             })
         }
-        
-
-
 module.exports = {
     createCon: createCon,
     queryCon: queryCon

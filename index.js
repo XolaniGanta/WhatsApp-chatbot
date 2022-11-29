@@ -74,7 +74,7 @@ router.post('/webhook', async (req, res) => {
                             title: 'Pay your account',
                             id: 'pay_account'
                         },
-                       
+                            
                         {
                             title: 'Check balance',
                             id: 'check_balance'
@@ -84,7 +84,7 @@ router.post('/webhook', async (req, res) => {
 
                 } else if(filterID != null){
                     await Whatsapp.sendText({
-                        message: `Hey ${recipientName} seems you've entered a wrong id number, please check and enter again.  `,
+                        message: `${recipientName} seems you've entered a wrong id number, please check and enter again.  `,
                         recipientPhone: recipientPhone
                     })
                 }

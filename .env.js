@@ -7,8 +7,6 @@ const production = {
     Meta_WA_wabaId: '110726525175448',
     Meta_WA_VerifyToken: 'APS',
 };
-
-
 const development = {
     ...process.env,
     NODE_ENV: process.env.NODE_ENV || 'development',
@@ -23,9 +21,6 @@ const fallback = {
     ...process.env,
     NODE_ENV: undefined,
 };
-
-//Return specific environment either Production/Development.
-
 module.exports = (environment) => {
     console.log(`Execution environment selected is: "${environment}"`);
     if (environment === 'production') {
