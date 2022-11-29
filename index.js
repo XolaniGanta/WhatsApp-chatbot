@@ -18,9 +18,7 @@ router.get("/", (req, res) => {
 
 router.get('/webhook', (req, res) => {
     try {
-        console.log('GET me!');
-
-
+        console.log('Doing a get request!');
         let mode = req.query['hub.mode'];
         let token = req.query['hub.verify_token'];
         let challenge = req.query['hub.challenge'];
@@ -86,15 +84,13 @@ router.post('/webhook', async (req, res) => {
 
                 } else if(filterID != null){
                     await Whatsapp.sendText({
-                        message: `Please enter a valid id number`,
+                        message: `Hey ${recipientName} seems you've entered a wrong id number, please check and enter again.  `,
                         recipientPhone: recipientPhone
                     })
                 }
             }
             //if the pay account is pressed
             if (typeOfMsg === 'simple_button_message') {
-               // const bd = dbRoute.queryCon;
-                //console.log(bd);
                 let buttonID = incomingMessage.button_reply.id;
                 if (buttonID === 'pay_account') {
                     await Whatsapp.sendSimpleButtons({
@@ -118,7 +114,7 @@ router.post('/webhook', async (req, res) => {
                     })
                 }
             }
-
+            
             if(typeOfMsg === 'simple_button_message'){
                 let buttonID = incomingMessage.button_reply.id;
                 if (buttonID === 'check_balance'){
