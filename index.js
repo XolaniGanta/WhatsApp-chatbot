@@ -50,7 +50,6 @@ router.post('/webhook', async (req, res) => {
             let typeOfMsg = incomingMessage.type; // extract the type of message (some are text, others are images, others are responses to buttons etc...)
             let message_id = incomingMessage.message_id; // extract the message id
     
-         
             //IF else logic 
             if (typeOfMsg === 'text_message') {
                 let incomingTextMessage = incomingMessage.text.body;
@@ -61,7 +60,7 @@ router.post('/webhook', async (req, res) => {
                         recipientPhone: recipientPhone
                     })
                 }
-            }
+            } 
             if (typeOfMsg === 'text_message') {
                 let incomingTextMessage = incomingMessage.text.body;
                 let count = incomingTextMessage.length; // length of the ID
@@ -74,7 +73,7 @@ router.post('/webhook', async (req, res) => {
                             title: 'Pay your account',
                             id: 'pay_account'
                         },
-                            
+
                         {
                             title: 'Check balance',
                             id: 'check_balance'
