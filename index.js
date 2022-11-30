@@ -1,8 +1,7 @@
 'use strict';
 const router = require('express').Router();
 
-///const dbRoute = require('./db');
-
+///const dbRoute = require('./db')
 const WhatsappCloudAPI = require('whatsappcloudapi_wrapper');
 
 const Whatsapp = new WhatsappCloudAPI({
