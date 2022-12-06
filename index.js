@@ -1,6 +1,7 @@
 'use strict';
 const {Sequelize, DataTypes} = require("sequelize");
 const router = require('express').Router();
+require('dotenv').config()
 
 ///const dbRoute = require('./db')
 const WhatsappCloudAPI = require('whatsappcloudapi_wrapper');
