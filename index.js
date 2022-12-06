@@ -1,4 +1,5 @@
 'use strict';
+const {Sequelize, DataTypes} = require("sequelize");
 const router = require('express').Router();
 
 ///const dbRoute = require('./db')
@@ -11,6 +12,41 @@ const Whatsapp = new WhatsappCloudAPI({
     graphAPIVersion: 'v15.0'
 });
 
+///Db Connection
+const sequelize = new Sequelize(
+    'thinkadamdb',
+    'root',
+    'password',
+     {
+       host: 'localhost',
+       dialect: 'mysql'
+     }
+   );
+
+// database logic
+ sequelize.authenticate().then(() => {
+    console.log('Connection has been established successfully.');
+}).catch((error) => {
+    console.error('Unable to connect to the database: ', error);
+ });
+     
+    const allrequests = sequelize.define(
+       "allrequests",{
+         id_type: DataTypes.TEXT
+       },
+       {
+         createdAt: false,
+         updatedAt: false
+       }
+     );
+
+ const results = allrequests.findAll({
+        where:{
+              id_type: "SerialNumber"
+        },
+        limit: 5,
+      });
+   
 router.get("/", (req, res) => {
     res.status(200).send("Webhook working...");
 });
@@ -55,7 +91,7 @@ router.post('/webhook', async (req, res) => {
                 let filterID = incomingTextMessage.match(/^\d+$/); //if it has numbers 
                 if (filterID === null) {
                     await Whatsapp.sendText({
-                        message: `Hi ${recipientName}, Welcome to BestForU self-service. In order to continue you are required to enter your ID.`,
+                        message: results,
                         recipientPhone: recipientPhone
                     })
                 }
@@ -86,6 +122,7 @@ router.post('/webhook', async (req, res) => {
                     })
                 }
             }
+            
             //if the pay account is pressed
             if (typeOfMsg === 'simple_button_message') {
                 let buttonID = incomingMessage.button_reply.id;
